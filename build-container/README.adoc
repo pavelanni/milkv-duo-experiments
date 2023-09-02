@@ -1,3 +1,62 @@
 = Container to build Linux image for MilkV Duo
 
+== Configure
+
+This `Containerfile` edits the original source code to remove the section used by the camera and give you more memory.
+If you need the camera, comment out the two lines with the `sed` command.
+
+Note: Go programs don't work without this change.
+I found this solution here: https://forum.sophgo.com/t/duo-golang/211
+
+== Build
+
+Use Podman or Docker to build the image:
+
+[source,console]
+----
+$ podman build -t milkv-duo-build:0.1.0 .
+----
+
+or 
+
+[source,console]
+----
+$ docker build -t milkv-duo-build:0.1.0 -f Containerfile .
+----
+
+If you want to keep the image in an external container registry, tag and push it the usual way.
+
+== Use
+
+. Create a directory to store the resulting image (the following is just an example; 
+use whatever is suitable for you, just set the `OUTPUT_DIR` to point to that directory)
++
+[source,console]
+----
+$ mkdir -p ~/out
+$ export OUTPUT_DIR=~/out
+----
+
+. Run the container
++
+[source,console]
+----
+$ podman run -it -v $OUTPUT_DIR:/root/duo-buildroot-sdk/out:z milkv-duo-build:0.1.0
+----
+
+. Build the image
++
+Inside the container you will be located in the `/root/duo-buildroot-sdk/` directory.
+Run the following command to build the image. The whole build process may take 20-40 minutes depending on your hardware. 
++
+[source,console]
+----
+# ./build_milkv.sh
+----
++
+The image will be located in the `OUTPUT_DIR`.
+
+. Burn the image the usual way following your OS instructions.
+
+
 
