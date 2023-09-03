@@ -1,0 +1,49 @@
+= GPIO pins and numbers
+
+One of the first things you would do with your new Milk-V Duo is turning the onboard LED on and off.
+There is an easy-to-follow tutorial which allows you to do this from your shell session: https://www.spotpear.com/index.php/index/study/detail/id/1096.html
+
+The tutorial simply states
+
+====
+The group number value of XGPIOC is 416, so the GPIO number is 416+24=440.
+====
+
+But what if I want to use other GPIO pins?
+How do I calculate the numbers for them?
+
+After exploring the Milk-V Duo file system I found the numbers that I needed in the `/sys/class/gpio` directory.
+Later I found them in the link:https://doc.sophgo.com/cvitek-develop-docs/master/docs_latest_release/CV180x_CV181x/en/01.software/OSDRV/Peripheral_Driver_Operation_Guide/build/html/7_GPIO_Operation_Guide.html[Peripheral Driver Operation Guide]
+
+* GPIOA is controlled by `gpiochip0` and its group number is 480.
+* GPIOC (that is used in the example and that controls the onboard LED) is controlled by `gpiochip2` and its group number is 416
+* PWR_GPIO is controlled by `gpiochip4` and its group number is 352
+
+[cols="1,1,1,2"]
+|===
+|GPIO name |GPIO pin |GPIO number |Notes
+
+|GPIOA14 |19 |494 |
+|GPIOA15 |20 |495 |
+|GPIOA16 |16 |496 |
+|GPIOA17 |17 |497 |
+|GPIOA22 |24 |502 |
+|GPIOA23 |21 |503 |
+|GPIOA24 |22 |504 |
+|GPIOA25 |25 |505 |
+|GPIOA26 |27 |506 |
+|GPIOA27 |26 |507 |
+|GPIOA28 |1  |508 |
+|GPIOA29 |2  |509 |
+|GPIOC9  |14 |425 |1.8V
+|GPIOC10 |15 |426 |1.8V
+|PWR_GPIO4 |29 |356 |1.8V
+|PWR_GPIO18 |12 |370 |
+|PWR_GPIO19 |6 |371 |
+|PWR_GPIO20 |7 |372 |
+|PWR_GPIO21 |11 |373 |
+|PWR_GPIO22 |10 |374 |
+|PWR_GPIO23 |9 |375 |
+|PWR_GPIO25 |5 |377 |
+|PWR_GPIO26 |4 |378 |
+|===
