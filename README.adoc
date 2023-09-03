@@ -1,0 +1,21 @@
+= Milk-V Duo experiments
+
+This is a collection of my experiments with the Milk-V Duo board.
+It is based on RISC-V CPU and it runs Linux inside.
+So it's not similar to Arduino or Raspberry Pi Pico where the board runs only your program that you flashed ont it.
+With Milk-V Duo you have an actual Linux with several dozen of processes running, and all the usual commands, including `vi`.
+
+Out of the box it supports RNDIS networking (Ethernet over USB) so when I connected it to a USB cable connected to my Fedora Linux laptop I could `ssh` into it.
+I'm going to add an RJ-45 connector to it or a breakout board to use normal Ethernet.
+
+I'm planning to use Go on this board so I made a couple of changes in the kernel configuration and rebuilt the image (see in the `build-container` directory).
+
+`hello` is just a Hello, World program in Go compiled for this board (of course!).
+
+`http` is a simple HTTP server running on this board (a dozen lines in Go).
+
+`montecarlo` is a program calculating Pi using the Monte-Carlo method.
+I copied it from here: https://ggcarvalho.dev/posts/montecarlo/ and it seems to be a simple way to quickly measure CPU performance.
+
+Also I collected some information about GPIO numbers (because I spent some time figuring it out myself so maybe it will save time for somebody else).
+Find the _GPIO pins and numbers_ document in the `docs` directory.
