@@ -8,29 +8,33 @@ import (
 	"syscall"
 	"time"
 
+	milkvduo "github.com/pavelanni/gpiod-milkvduo"
 	"github.com/warthog618/gpiod"
 )
 
 func main() {
-	offset := 21
+	pin := "PWR_GPIO21"
 	v := 0
-	c, err := gpiod.NewChip("gpiochip4")
+	lineId, err := milkvduo.PinLineID(pin)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	l, err := c.RequestLine(offset, gpiod.AsOutput())
+	l, err := gpiod.RequestLine(lineId.Chip, lineId.Offset, gpiod.AsOutput())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer func() {
-		l.Reconfigure(gpiod.AsInput)
+		err := l.Reconfigure(gpiod.AsInput)
+		if err != nil {
+			log.Fatal(err)
+		}
 		l.Close()
 	}()
 
 	values := map[int]string{0: "inactive", 1: "active"}
-	fmt.Printf("Set pin %d %s\n", offset, values[v])
+	fmt.Printf("Set pin %s %s\n", pin, values[v])
 
 	// capture exit signals to ensure pin is reverted to input on exit.
 	quit := make(chan os.Signal, 1)
@@ -45,10 +49,9 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("Set pin %d %s\n", offset, values[v])
+			fmt.Printf("Set pin %s %s\n", pin, values[v])
 		case <-quit:
 			return
 		}
 	}
-
 }
