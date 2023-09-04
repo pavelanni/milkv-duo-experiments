@@ -1,4 +1,8 @@
 = Milk-V Duo experiments
+:imagesdir: ./images
+:source-highlighter: highlight.js
+
+image::duo-v1.2.png[Milk-V Duo,width=400]
 
 This is a collection of my experiments with the Milk-V Duo board.
 It is based on RISC-V CPU and it runs Linux inside.
@@ -19,3 +23,30 @@ I copied it from here: https://ggcarvalho.dev/posts/montecarlo/ and it seems to 
 
 Also I collected some information about GPIO numbers (because I spent some time figuring it out myself so maybe it will save time for somebody else).
 Find the _GPIO pins and numbers_ document in the `docs` directory.
+
+== Using `gpiod`
+
+I started using the `gpiod` Go library written by @warthog618: https://github.com/warthog618/gpiod.
+Duo has a different pin naming scheme so I had to create my own mapping function.
+
+In this board there are 5 GPIO chips (`gpiochip0` to `gpiochip4`).
+The pins are named like `GPIOA14`, `GPIOC9`, or `PWR_GPIO21` and they are served by different chips.
+In this case the names above would be translated to `gpiochip0` + offset 14, `gpiochip2` + offset 9,
+and `gpiochip4` + offset 21 respectively.
+
+The mapping function is located here: https://github.com/pavelanni/gpiod-milkvduo.
+You'll find more details and a simple example there.
+
+
+== Board info
+
+Here is the official Milk-V Duo documentation: https://milkv.io/docs/duo/overview
+
+More information and guides are available here: https://spotpear.com/index/product/detail/id/1296.html (check the RESOURCES tab for the guides)
+
+This repo contains datasheets and other info for the CPU/TPU used in Duo: https://github.com/sophgocommunity/Duo_Doc/tree/main
+
+
+=== Pinout
+
+image::pinout.webp[]
