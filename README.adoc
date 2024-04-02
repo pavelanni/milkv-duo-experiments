@@ -6,7 +6,7 @@ image::duo-v1.2.png[Milk-V Duo,width=400]
 
 This is a collection of my experiments with the Milk-V Duo board.
 It is based on RISC-V CPU and it runs Linux inside.
-So it's not similar to Arduino or Raspberry Pi Pico where the board runs only your program that you flashed ont it.
+So it's not similar to Arduino or Raspberry Pi Pico where the board runs only your program that you flashed on it.
 With Milk-V Duo you have an actual Linux with several dozen of processes running, and all the usual commands, including `vi`.
 
 Out of the box it supports RNDIS networking (Ethernet over USB) so when I connected it to a USB cable connected to my Fedora Linux laptop I could `ssh` into it.
